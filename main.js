@@ -399,7 +399,7 @@ function createStar(x, y, forceType = null) {
         radius: CONFIG.star.radius,
         type: type,
         phase: Math.random() * Math.PI * 2,
-        amplitude: type === 'vertical' ? 40 : (type === 'circular' ? 30 : 0),
+        amplitude: type === 'vertical' ? 60 : (type === 'circular' ? 30 : 0),
         originalY: y,
         speedMultiplier: speedMultiplier
     });

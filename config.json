@@ -37,8 +37,8 @@
       "cluster": 0.05
     },
     "movementTypes": {
-      "static": 0.6,
-      "vertical": 0.3,
+      "static": 0.4,
+      "vertical": 0.5,
       "circular": 0.1
     },
     "gateChaining": {
@@ -58,10 +58,10 @@
     "maxHP": 5,
     "hpLossPerMissedBalloon": 1,
     "difficultyPhases": [
-      { "distance": 0, "multiplier": 1.0, "movingStarChance": 0.1 },
-      { "distance": 500, "multiplier": 1.2, "movingStarChance": 0.15 },
-      { "distance": 1000, "multiplier": 1.5, "movingStarChance": 0.2 },
-      { "distance": 2000, "multiplier": 2.0, "movingStarChance": 0.3 }
+      { "distance": 0, "multiplier": 1.0, "movingStarChance": 0.25 },
+      { "distance": 500, "multiplier": 1.2, "movingStarChance": 0.35 },
+      { "distance": 1000, "multiplier": 1.5, "movingStarChance": 0.45 },
+      { "distance": 2000, "multiplier": 2.0, "movingStarChance": 0.6 }
     ]
   },
   "sea": {
