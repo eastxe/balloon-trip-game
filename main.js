@@ -608,14 +608,17 @@ canvas.addEventListener('touchend', (e) => {
 
     // Check if it's a swipe (quick movement)
     if (touchDuration < maxSwipeDuration) {
-        // Vertical swipe (up)
-        if (deltaY < -swipeThreshold && Math.abs(deltaY) > Math.abs(deltaX)) {
-            // Up swipe: flap only
+        let isSwipe = false;
+
+        // Check for vertical swipe component (up)
+        if (deltaY < -swipeThreshold) {
+            // Up swipe: flap
             gameState.player.vy = CONFIG.player.flapForce;
-            return;
+            isSwipe = true;
         }
-        // Horizontal swipe (left or right)
-        else if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+
+        // Check for horizontal swipe component (left or right)
+        if (Math.abs(deltaX) > swipeThreshold) {
             if (deltaX < 0) {
                 // Left swipe
                 gameState.player.vx -= CONFIG.player.horizontalForce;
@@ -623,6 +626,11 @@ canvas.addEventListener('touchend', (e) => {
                 // Right swipe
                 gameState.player.vx += CONFIG.player.horizontalForce;
             }
+            isSwipe = true;
+        }
+
+        // If we detected a swipe, don't process as tap
+        if (isSwipe) {
             return;
         }
     }
