@@ -538,6 +538,11 @@ function checkStarCollisions() {
 // ==============================
 // Input Handling
 // ==============================
+// Track touch/mouse positions for swipe detection
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+
 function handleInput(x) {
     if (!gameState.isRunning) return;
 
@@ -563,16 +568,73 @@ function handleInput(x) {
     }
 }
 
-// Mouse events
+// Mouse events (keep original behavior for desktop)
 canvas.addEventListener('mousedown', (e) => {
     handleInput(e.clientX);
 });
 
-// Touch events
+// Touch events with swipe detection
 canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const touch = e.touches[0];
-    handleInput(touch.clientX);
+    const canvasRect = canvas.getBoundingClientRect();
+    touchStartX = touch.clientX - canvasRect.left;
+    touchStartY = touch.clientY - canvasRect.top;
+    touchStartTime = Date.now();
+});
+
+canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (!gameState.isRunning) return;
+
+    // Start real game on first input
+    if (gameState.isWaiting) {
+        startRealGame();
+    }
+
+    const touch = e.changedTouches[0];
+    const canvasRect = canvas.getBoundingClientRect();
+    const touchEndX = touch.clientX - canvasRect.left;
+    const touchEndY = touch.clientY - canvasRect.top;
+    const touchDuration = Date.now() - touchStartTime;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const canvasWidth = canvasRect.width;
+
+    // Swipe detection threshold
+    const swipeThreshold = 30;
+    const maxSwipeDuration = 500; // ms
+
+    // Check if it's a swipe (quick movement)
+    if (touchDuration < maxSwipeDuration) {
+        // Vertical swipe (up)
+        if (deltaY < -swipeThreshold && Math.abs(deltaY) > Math.abs(deltaX)) {
+            // Up swipe: flap only
+            gameState.player.vy = CONFIG.player.flapForce;
+            return;
+        }
+        // Horizontal swipe (left or right)
+        else if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX < 0) {
+                // Left swipe
+                gameState.player.vx -= CONFIG.player.horizontalForce;
+            } else {
+                // Right swipe
+                gameState.player.vx += CONFIG.player.horizontalForce;
+            }
+            return;
+        }
+    }
+
+    // If not a swipe, treat as tap
+    if (touchStartX < canvasWidth / 2) {
+        // Left tap: move left only
+        gameState.player.vx -= CONFIG.player.horizontalForce;
+    } else {
+        // Right tap: move right only
+        gameState.player.vx += CONFIG.player.horizontalForce;
+    }
 });
 
 // Keyboard events
@@ -893,7 +955,7 @@ function drawWaitingMessage() {
     // Instructions
     ctx.font = '18px Arial';
     ctx.fillStyle = '#E0F6FF';
-    ctx.fillText('画面タップ：左右移動＋浮遊', CONFIG.canvas.width / 2, CONFIG.canvas.height / 2 - 40);
+    ctx.fillText('タップ：左右移動 | 上スワイプ：浮遊', CONFIG.canvas.width / 2, CONFIG.canvas.height / 2 - 40);
     ctx.fillText('← →キー：左右移動 | スペース/↑：浮遊', CONFIG.canvas.width / 2, CONFIG.canvas.height / 2 - 10);
     ctx.fillText('風船を割ろう！星と海を避けよう！', CONFIG.canvas.width / 2, CONFIG.canvas.height / 2 + 20);
     ctx.fillText('風船を逃すとHPが減ります', CONFIG.canvas.width / 2, CONFIG.canvas.height / 2 + 50);
