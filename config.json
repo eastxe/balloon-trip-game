@@ -1,0 +1,77 @@
+{
+  "canvas": {
+    "width": 800,
+    "height": 450
+  },
+  "player": {
+    "radius": 15,
+    "startX": 150,
+    "startY": 225,
+    "gravity": 0.15,
+    "flapForce": -3.5,
+    "horizontalForce": 5.0,
+    "drag": 0.92,
+    "maxVelocityY": 8,
+    "maxVelocityX": 8,
+    "balloonColor1": "#FF6B9D",
+    "balloonColor2": "#4ECDC4",
+    "bodyColor": "#FFD93D"
+  },
+  "scroll": {
+    "speed": 2.0,
+    "maxSpeed": 5.0,
+    "acceleration": 0.001
+  },
+  "star": {
+    "radius": 12,
+    "color": "#FFFFFF",
+    "glowColor": "#FFFF00",
+    "baseSpawnInterval": 3000,
+    "spawnIntervalVariance": 800,
+    "minVerticalGap": 240,
+    "patterns": {
+      "single": 0.3,
+      "gate": 0.45,
+      "stairs": 0.1,
+      "wave": 0.1,
+      "cluster": 0.05
+    },
+    "movementTypes": {
+      "static": 0.6,
+      "vertical": 0.3,
+      "circular": 0.1
+    },
+    "gateChaining": {
+      "enabled": true,
+      "chainProbability": 0.7,
+      "maxChainLength": 4
+    }
+  },
+  "balloon": {
+    "radius": 18,
+    "spawnInterval": 2500,
+    "colors": ["#FF6B9D", "#4ECDC4", "#FFD93D", "#95E1D3", "#F38181"],
+    "floatSpeed": 0.5,
+    "scrollSpeedMultiplier": 0.4
+  },
+  "game": {
+    "maxHP": 5,
+    "hpLossPerMissedBalloon": 1,
+    "difficultyPhases": [
+      { "distance": 0, "multiplier": 1.0, "movingStarChance": 0.1 },
+      { "distance": 500, "multiplier": 1.2, "movingStarChance": 0.15 },
+      { "distance": 1000, "multiplier": 1.5, "movingStarChance": 0.2 },
+      { "distance": 2000, "multiplier": 2.0, "movingStarChance": 0.3 }
+    ]
+  },
+  "sea": {
+    "height": 20,
+    "waveColor": "#1a3a52"
+  },
+  "colors": {
+    "skyTop": "#0a1628",
+    "skyMiddle": "#1a2f4a",
+    "skyBottom": "#2d4a6b",
+    "stars": "#ffffff"
+  }
+}

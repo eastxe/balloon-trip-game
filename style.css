@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 100vh;
+    max-height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a2e;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+    cursor: pointer;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#score-display {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+#hp-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #FF6B9D;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+#game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(180deg, rgba(10, 22, 40, 0.95) 0%, rgba(26, 47, 74, 0.92) 50%, rgba(45, 74, 107, 0.92) 100%);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2), 0 10px 50px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    color: white;
+    pointer-events: all;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+}
+
+#game-over.hidden {
+    display: none;
+}
+
+#game-over h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+                 0 0 40px rgba(255, 215, 0, 0.4),
+                 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+#game-over p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #E0F6FF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+#final-score {
+    font-size: 28px;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+button {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 6px 20px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #FFE44D 0%, #FFB833 100%);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+    #game-container {
+        max-width: 100%;
+        max-height: 100vh;
+    }
+
+    #score-display {
+        font-size: 28px;
+        top: 10px;
+    }
+
+    #game-over {
+        padding: 30px;
+        min-width: 80%;
+    }
+
+    #game-over h2 {
+        font-size: 28px;
+    }
+
+    #game-over p {
+        font-size: 16px;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 18px;
+    }
+}
+
+/* Portrait mode warning - encourage landscape */
+@media (orientation: portrait) and (max-width: 500px) {
+    body::before {
+        content: "画面を横向きにしてください / Please rotate your device to landscape mode";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+        z-index: 9999;
+    }
+}
